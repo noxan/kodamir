@@ -3,6 +3,8 @@ var path = require('path');
 var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
 
+var webserver = require('./server/app.js');
+
 
 var CONFIG = {
   targetDirectory: 'build',
@@ -63,11 +65,14 @@ gulp.task('styles', function() {
     .pipe(gulp.dest(CONFIG.styles.targetDirectory));
 });
 
+gulp.task('dev', function() {
+  webserver({
+    debug: true
+  });
+});
+
 gulp.task('webserver', function() {
-  gulp.src(CONFIG.targetDirectory).pipe($.webserver({
-    port: 8080,
-    livereload: true
-  }));
+  webserver();
 });
 
 gulp.task('watch', function() {
